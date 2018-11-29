@@ -1,0 +1,107 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form">
+
+	<Panel
+	    class="sapUiResponsiveMargin"
+	    width="auto"
+	    headerText="{i18n>productTitle}">
+        
+        <content>
+            
+            <form:SimpleForm
+                id="addForm"
+                layout="ResponsiveGridLayout"
+                labelSpanXL="3"
+                labelSpanL="3"
+                labelSpanM="3"
+                labelSpanS="12"
+                adjustLabelSpan="false"
+                emptySpanXL="4"
+                emptySpanL="4"
+                emptySpanM="4"
+                emptySpanS="0"
+                columnsXL="1"
+                columnsL="1"
+                columnsM="1"
+                singleContainerFullSize="false">
+                
+                <form:content>
+                    
+                    <Label text="{i18n>productNameLabel}"/>
+                    <Input id="nameInput" value="{Name}" change="onChangeFreeText"/>
+                    
+                    <Label text="{i18n>productCategoryLabel}"/>
+                    <ComboBox
+                        id="categoryCombo"
+                        items="{
+                            path: '/VH_CategorySet'
+                        }"
+                        value="{Category}"
+                        loadItems="comboBoxLoadItems"
+                        change="onChangeVHInput">
+                        <core:Item key="{Category}" text="{Category}"/>
+                    </ComboBox>
+                    
+                    <Label text="{i18n>supplierIDLabel}"/>
+                    <Input
+                        id="supplierInput"
+                        value="{SupplierID}"
+                        showSuggestion="true"
+                        showValueHelp="true"
+                        valueHelpRequest="handleValueHelp"
+                        change="onChangeVHInput"
+                        submit="onChangeVHInput"
+                        suggestionItems="{/BusinessPartnerSet}">
+                            <suggestionItems>
+                                <core:Item text="BusinessPartnerID"/>
+                            </suggestionItems>
+                    </Input>
+                    
+                    <Label text="{i18n>priceLabel}"/>
+                    <Input
+                        id="priceInput"
+                        submit="onAmountChange"
+                        change="onAmountChange"
+                        value="{
+                            parts: [
+                                {path: 'Price'},
+                                {path: 'CurrencyCode'}
+                            ],
+                            type: 'sap.ui.model.type.Currency',
+                            formatOptions: {
+                                showMeasure: false
+                            }
+                        }"/>
+                    <Input
+                        id="currencyInput"
+                        value="{
+                            path: 'CurrencyCode',
+                            type: 'sap.ui.model.odata.type.String',
+                            constraints: {
+                                minLength: 3,
+                                maxLength: 5
+                            }
+                        }"
+                        showSuggestion="true"
+                        showValueHelp="true"
+                        valueHelpRequest="handleValueHelp"
+                        change="onChangeVHInput"
+                        submit="onChangeVHInput"
+                        suggestionItems="{/VH_CurrencySet}">
+                            <suggestionItems>
+                                <core:Item text="{Waers}"/>
+                            </suggestionItems>
+                    </Input>
+
+                </form:content>
+            
+            </form:SimpleForm>
+        
+        </content>			    
+	
+	</Panel>
+
+</core:FragmentDefinition>
+                    

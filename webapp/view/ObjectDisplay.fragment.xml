@@ -1,0 +1,31 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc">
+
+    <ObjectHeader
+		id="objectHeader"
+		title="{ProductID}"
+		titleActive="true"
+		titlePress="onShowDetailPopover"
+		responsive="true"
+		number="{
+		    parts: [
+		        {path: 'Price'},
+		        {path: 'CurrencyCode'}
+		    ],
+		    type: 'sap.ui.model.type.Currency',
+		    formatOptions: {
+	           showMeasure: false
+		    }
+		}"
+		numberUnit="{CurrencyCode}">
+		<attributes>
+		    <ObjectAttribute text="{Name}"/>
+		</attributes>
+	</ObjectHeader>
+			
+    <mvc:XMLView viewName="opensap.manageproductsapp.view.ProductDetails"/>
+	<core:Fragment fragmentName="opensap.manageproductsapp.view.SupplierInfo" type="XML"/>
+
+</core:FragmentDefinition>

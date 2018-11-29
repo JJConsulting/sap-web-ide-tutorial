@@ -1,0 +1,144 @@
+<mvc:View
+	controllerName="opensap.manageproductsapp.controller.Worklist"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.m.semantic"
+	xmlns:l="sap.ui.layout">
+
+	<semantic:FullscreenPage
+		id="page"
+		navButtonPress="onNavBack"
+		showNavButton="true"
+		title="{i18n>worklistViewTitle}">
+		<semantic:content>
+		    <IconTabBar
+		        id="IconTabBar"
+		        select="onQuickFilter"
+		        expandable="false"
+		        applyContentPadding="false"
+		        stretchContentHeight="true">
+                
+                <items>
+                    <IconTabFilter
+                        key="all"
+                        showAll="true"
+                        count="{i18n>worklistFilterProductsAllCount}"
+                        text="{i18n>worklistFilterProductsAll}"/>
+                    <IconTabSeparator/>
+                    <IconTabFilter
+                        key="cheap"
+                        count="{worklistView>/cheap}"
+                        icon="sap-icon://waiver"
+                        iconColor="Positive"
+                        text="{i18n>worklistFilterCheap}"/>
+                    <IconTabFilter
+                        key="moderate"
+                        count="{worklistView>/moderate}"
+                        icon="sap-icon://loan"
+                        iconColor="Critical"
+                        text="{i18n>worklistFilterModerate}"/>
+                    <IconTabFilter
+                        key="expensive"
+                        count="{worklistView>/expensive}"
+                        icon="sap-icon://money-bills"
+                        iconColor="Negative"
+                        text="{i18n>worklistFilterExpensive}"/>
+                </items>
+                
+                <content>
+    				<ScrollContainer
+    						height="100%"
+    						width="100%"
+    						horizontal="false"
+    						vertical="true">
+            			<Table
+            				id="table"
+            				width="auto"
+            				items="{
+            					path: '/ProductSet',
+            					sorter: {
+            						path: 'ProductID',
+            						descending: false
+            					},
+            					parameters: {
+            					    expand: 'ToSupplier'
+            					}
+            				}"
+            				noDataText="{worklistView>/tableNoDataText}"
+            				busyIndicatorDelay="{worklistView>/tableBusyDelay}"
+            				growing="true"
+            				growingThreshold="10"
+            				growingScrollToLoad="false"
+            				updateFinished="onUpdateFinished">
+            
+            				<headerToolbar>
+            					<Toolbar>
+            						<Title id="tableHeader" text="{worklistView>/worklistTableTitle}"/>
+            						<ToolbarSpacer />
+            						<SearchField
+            							id="searchField"
+            							tooltip="{i18n>worklistSearchTooltip}"
+            							search="onSearch"
+            							width="auto">
+            						</SearchField>
+            						<Button id="addButton" icon="sap-icon://add" press="onAdd" tooltip="{i18n>addTooltip}"/>
+            					</Toolbar>
+            				</headerToolbar>
+            
+            				<columns>
+            					<Column id="nameColumn">
+            						<Text text="{i18n>tableNameColumnTitle}" id="nameColumnTitle"/>
+            					</Column>
+            					<Column id="supplierColumn" minScreenWidth="Tablet" demandPopin="true">
+            					    <Text text="{i18n>tableSupplierTitle}"/>
+            					</Column>
+            					<Column id="webAddressColumn" minScreenWidth="Tablet" demandPopin="false">
+            					    <Text text="{i18n>tableWebAddressTitle}"/>
+            					</Column>
+            					<Column id="unitNumberColumn" hAlign="Right">
+            						<Text text="{i18n>tableUnitNumberColumnTitle}" id="unitNumberColumnTitle"/>
+            					</Column>
+            				</columns>
+            
+            				<items>
+            					<ColumnListItem
+            						type="Navigation"
+            						press="onPress">
+            						<cells>
+            							<ObjectIdentifier
+            								title="{ProductID}"
+            								text="{Name}"
+            								titleActive="true"
+            								titlePress="onShowDetailPopover"/>
+            						    <Text text="{SupplierName}"/>
+            						    <Link text="{ToSupplier/WebAddress}" href="{ToSupplier/WebAddress}" target="_blank"/>
+            							<ObjectNumber
+            								number="{
+            								    parts: [
+            								        {path: 'Price'},
+            								        {path: 'CurrencyCode'}
+            								    ],
+            								    type: 'sap.ui.model.type.Currency',
+            								    formatOptions: {
+            								        showMeasure: false
+            								    }
+            								}"
+            								unit="{CurrencyCode}"/>
+            						</cells>
+            					</ColumnListItem>
+            				</items>
+            			</Table>
+                    </ScrollContainer>
+                </content>
+                
+		    </IconTabBar>
+
+		</semantic:content>
+
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction id="shareEmail" press="onShareEmailPress"/>
+		</semantic:sendEmailAction>
+
+	</semantic:FullscreenPage>
+
+</mvc:View>
