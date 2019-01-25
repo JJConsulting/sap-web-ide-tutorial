@@ -1,4 +1,4 @@
- #### WELCOME ####
+#### WELCOME ####
 
 This is your copy of the SAPUI5 Worklist Freestyle Application Template.
 You can find the template version in the .project.json - file in your workspace
@@ -27,4 +27,5 @@ https://sapui5.hana.ondemand.com/#docs/guide/a460a7348a6c431a8bd967ab9fb8d918.ht
  
  7. Modify? --> WIP
     - Create New Controller for Editing View extends BaseController. Use this as the extension for Display and Add View
- 
+    
+ Test Git Sent from Local Web IDE
